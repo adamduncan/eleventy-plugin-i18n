@@ -1,2 +1,3 @@
 # eleventy-plugin-i18n
-Eleventy plugin to assist with dictionary translations
+
+_Coming soon:_ Eleventy plugin to assist with dictionary translations
