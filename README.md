@@ -113,25 +113,25 @@ module.exports = {
 };
 ```
 
-You might choose to break translations out into their own individual `en-GB.js` and `es-ES.js` data files, then import and merge them into a single `translations` object for the plugin. As long as our `translation` schema is the same when you're done, we're good to go! (See: API `key`)
+You might choose to break translations out into their own individual `en-GB.js` and `es-ES.js` data files, then import and merge them into a single `translations` object for the plugin. As long as our `translation` schema is the same when you're done, we're good to go! (See: [API: `key`](https://github.com/adamduncan/eleventy-plugin-i18n#key))
 
 #### `fallbackLocale`
 
-Type: 'String' | Default: ‌`en`
+Type: `String` | Default: ‌`en`
 
 If a matching translation for a given dictionary item can't be found, the `i18n` filter will try to find a fallback from this language in its place.
 
-:eyes: `eleventy-plugin-i18n` will warn you in the Node console when the intended or fallback value can't be found for a given language based on your `translations`.
+:eyes: `eleventy-plugin-i18n` will warn you in the Node console when the intended or fallback values can't be found for a given language based on your `translations`.
 
 ## Usage
 
-Once configured, the `i18n` [Universal filter](https://www.11ty.dev/docs/filters/#universal-filters) is available throughout Nunjucks, Handlebars, Liquid and JavaScript templates and includes. E.g. To return the translation for our `hello` key in Nunjucks or Liquid syntax:
+Once configured, the `i18n` [Universal filter](https://www.11ty.dev/docs/filters/#universal-filters) is available throughout Nunjucks, Handlebars, Liquid, and JavaScript templates and includes. E.g. To return the translation for our `hello` key in Nunjucks or Liquid syntax:
 
 ```njk
 {{ 'hello' | i18n }}
 ```
 
-Whether used in a page, layout or include, the filter will automatically determine the correct translation to use based on its site's language. No need to pass `locale` around everywhere!
+Whether used in a page, layout or include, the filter will automatically determine the correct translation to use based on its site's language. No need to pass `locale` everywhere it's used!
 
 ## API
 
@@ -145,7 +145,7 @@ Type: `String`
 
 The translation lookup key for our dictionary item.
 
-:hushed: Fun fact: Translation objects can be structured however you like, as long as the `locale` is at the end of the chain. `i18n` uses [Lodash's `get`](https://lodash.com/docs/#get) under the hood to make lookups like this possible:
+:hushed: Fun fact: Translation objects can be structured however you like, as long as the `locale` is at the end of the chain. `i18n` uses [Lodash's `get`](https://lodash.com/docs/#get) under the hood to make lookups like this easy peasy:
 
 ```js
 module.exports = {
@@ -166,7 +166,7 @@ module.exports = {
 
 Type: `Object` | Default: `{}`
 
-Translation values can interpolate data using the `{{ }}` syntax (thanks to [`templite`](https://github.com/lukeed/templite/) — check out their docs!). For example, given the translation:
+Translation values can interpolate data using the `{{ }}` syntax (thanks to @lukeed's awesome [`templite`](https://github.com/lukeed/templite/) — check out their docs!). For example, given the translation:
 
 ```js
 module.exports = {
@@ -186,19 +186,19 @@ module.exports = {
 
 Type: `String`
 
-We can ensure a translation will always return in a given language by including a `localeOverride` as the second argument. For example, this will always render in French, no matter which country site it's in:
+We can guarantee a translation will always return in a given language by including a `localeOverride` as the second argument. For example, this will always render in French, no matter which country site it's in:
 
 ```
 {{ 'hello' | i18n({}, 'fr-FR') }}
 ```
 
-_Note:_ Here we will still have to pass the first `data` argument, even if no interpolation is needed. You can pass an empty object `{}` or `null`.
+_Note:_ Here we will still have to pass the first `data` argument, even if no interpolation is needed. You can pass an empty object `{}` or `undefined`.
 
 ## Roadmap
 
 - [ ] Write up tutorial to build on some great concepts ([multilingual](https://www.webstoemp.com/blog/multilingual-sites-eleventy/), [language toggle](https://www.webstoemp.com/blog/language-switcher-multilingual-jamstack-sites/)) in this area. Dive further into how to architect and implement multilingual Eleventy sites, and leverage the plugin (e.g. [smart language switching](https://github.com/adamduncan/eleventy-plugin-i18n-demo/blob/master/src/_includes/components/language-selector.njk)).
 - [ ] Explore shipping additional i18n-aware `pluralize` filter `{{ 'apple' | i18n | pluralize(3) }}` (Awesome suggestion from [@alexcarpenter](https://github.com/alexcarpenter)).
-- [ ] Quite mode? Some might want to suppress the console logs on missing translations?
+- [ ] Quiet mode option? Some might want to suppress the console logs on missing translations?
 
 ---
 
