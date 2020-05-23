@@ -27,7 +27,7 @@ We'll be writing up a full tutorial to provide a guide and some handy **11ty i18
 
 ### 1. Define language site directories
 
-Create directories at the site root for each language code (e.g. `en`) or language code with country suffix (e.g. `en-GB`):
+Create directories at the site root for each language code (e.g. `en`) or language code with country code suffix (e.g. `en-GB`):
 
 ```
 ├─ src
@@ -39,23 +39,22 @@ Create directories at the site root for each language code (e.g. `en`) or langua
        └─ index.njk
 ```
 
-Either is fine. Let's assume we'll need to support multiple dialects in the future, and include country suffixes.
+Either is fine. Let's assume we'll need to support multiple dialects in the future, and include country code suffixes.
 
-These directory names determine the `lang` value of each language site. This enables us to infer language when translating terms throughout their pages.
+These directory names determine the `lang` value of each language site. This enables Eleventy to infer language when translating terms throughout their pages.
 
 ### 2. Create directory data files
 
-For each language site directory, create a locale data file of the same name. Include `dir` and `locale` values:
+In each language site directory, create a locale data file of the same name. Include `dir` and `locale` values. E.g.: `src/en-GB/en-GB.json`
 
-```
-// src/en-GB/en-GB.json
+```json
 {
   "dir": "ltr",
   "locale": "en-GB"
 }
 ```
 
-:point_right: Bonus point: Wherever your main HTML document is defined, include `lang` and `dir` attributes:
+:point_right: Bonus point: Wherever your main HTML document template is defined, include `lang` and `dir` attributes:
 
 ```
 <html lang="{{ locale }}" dir="{{ dir }}">
@@ -115,6 +114,8 @@ module.exports = {
 
 You might choose to break translations out into their own individual `en-GB.js` and `es-ES.js` data files, then import and merge them into a single `translations` object for the plugin. As long as our `translation` schema is the same when you're done, we're good to go! (See: [API: `key`](https://github.com/adamduncan/eleventy-plugin-i18n#key))
 
+_Note:_ These data files could also be JSON, but I've opted for JS files for more flexibility around quotation marks and comments.
+
 #### `fallbackLocale`
 
 Type: `String` | Default: ‌`en`
@@ -145,7 +146,7 @@ Type: `String`
 
 The translation lookup key for our dictionary item.
 
-:hushed: Fun fact: Translation objects can be structured however you like, as long as the `locale` is at the end of the chain. `i18n` uses [Lodash's `get`](https://lodash.com/docs/#get) under the hood to make lookups like this easy peasy:
+:hushed: Fun fact: Translation objects can be structured however you like, as long as the `locale` is at the end of the chain. `i18n` uses [lodash's `get`](https://lodash.com/docs/#get) under the hood to make dot notation lookups like this easy peasy:
 
 ```js
 module.exports = {
@@ -171,7 +172,7 @@ Translation values can interpolate data using the `{{ }}` syntax (thanks to [@lu
 ```js
 module.exports = {
   hello_name: {
-    'en-GB': 'Hello, {{ name }}',
+    'en-GB': 'Hello, {{ name }}!',
     'es-ES': '¡Hola {{ name }}!'
   }
 };
@@ -196,7 +197,7 @@ _Note:_ Here we will still have to pass the first `data` argument, even if no in
 
 ## Roadmap
 
-- [ ] Write up tutorial to build on some great concepts ([multilingual](https://www.webstoemp.com/blog/multilingual-sites-eleventy/), [language toggle](https://www.webstoemp.com/blog/language-switcher-multilingual-jamstack-sites/)) in this area. Dive further into how to architect and implement multilingual Eleventy sites, and leverage the plugin (e.g. [smart language switching](https://github.com/adamduncan/eleventy-plugin-i18n-demo/blob/master/src/_includes/components/language-selector.njk)).
+- [ ] Write up tutorial to build on some great concepts ([multilingual](https://www.webstoemp.com/blog/multilingual-sites-eleventy/), [language toggle](https://www.webstoemp.com/blog/language-switcher-multilingual-jamstack-sites/)) in this area. Dive further into how to architect and implement multilingual Eleventy sites, and leverage the plugin (e.g. [smart language switching](https://github.com/adamduncan/eleventy-plugin-i18n-demo/blob/master/src/_includes/components/language-selector.njk), using Netlify's `_redirects` to get users to where they need to go).
 - [ ] Explore shipping additional i18n-aware `pluralize` filter `{{ 'apple' | i18n | pluralize(3) }}` (Awesome suggestion from [@alexcarpenter](https://github.com/alexcarpenter)).
 - [ ] Quiet mode option? Some might want to suppress the console logs on missing translations?
 
