@@ -1,6 +1,15 @@
 # eleventy-plugin-i18n
 
-:warning: _Coming soon:_ [Eleventy](https://www.11ty.dev/) plugin to assist with internationalization and dictionary translations.
+⚠️ _Coming soon:_ [Eleventy](https://www.11ty.dev/) plugin to assist with internationalization and dictionary translations.
+
+What's in the box? A contextually-aware `i18n` filter, with smarts and dynamic string interpolation.
+
+- 📦 [Install](#install)
+- 🕹️ [Demo](#demo)
+- ⚙️ [Configuration](#configuration)
+- 🔮 [Usage](#usage)
+- 📓 [API](#api)
+- 🚗 [Roadmap](#roadmap)
 
 ## Install
 
@@ -10,10 +19,6 @@ Soon to be available on npm. (As soon as they decide the package name isn't a sp
 npm install eleventy-plugin-i18n --save
 ```
 
-## Plugin features
-
-- Contextually-aware `i18n` filter, with dynamic string interpolation
-
 ## Demo
 
 Dive in to see how the plugin is used in a multilingual Eleventy site:
@@ -21,7 +26,7 @@ Dive in to see how the plugin is used in a multilingual Eleventy site:
 - [Demo site](https://eleventy-plugin-i18n-demo.netlify.app/)
 - [Source](https://github.com/adamduncan/eleventy-plugin-i18n-demo/)
 
-We'll be writing up a full tutorial to provide a guide and some handy **11ty i18n** hints. For a quick rundown in the meantime, check out the [TL;DR walkthrough](https://github.com/adamduncan/eleventy-plugin-i18n-demo#tldr-just-riffin).
+We'll be writing up a tutorial to provide a guide and some handy **11ty i18n** hints (just as soon as we work out what all those letters and numbers mean). For a quick rundown in the meantime, check out the [TL;DR walkthrough](https://github.com/adamduncan/eleventy-plugin-i18n-demo#tldr-just-riffin).
 
 ## Configuration
 
@@ -45,7 +50,7 @@ These directory names determine the `lang` value of each language site. This ena
 
 ### 2. Create directory data files
 
-In each language site directory, create a locale data file of the same name. Include `dir` and `locale` values. E.g.: `src/en-GB/en-GB.json`
+In each language site directory, create a locale data file of the same name. Include `dir` and `locale` values. E.g. `src/en-GB/en-GB.json`
 
 ```json
 {
@@ -54,7 +59,7 @@ In each language site directory, create a locale data file of the same name. Inc
 }
 ```
 
-:point_right: Bonus point: Wherever your main HTML document template is defined, include `lang` and `dir` attributes:
+👉 Bonus point: Wherever your main HTML document template is defined, include `lang` and `dir` attributes:
 
 ```
 <html lang="{{ locale }}" dir="{{ dir }}">
@@ -87,7 +92,7 @@ Type: `Object` | Default: `{}`
 
 Schema: `{ [key]: { [locale]: 'String' } }`
 
-This object contains our dictionary of translations for each respective language. It can be declared inline within the plugin options (as above), or lifted out into its own JS module to keep things tidy:
+This object contains our dictionary of translations for each respective language. It _can_ be declared inline within the plugin options (as above), but it might be nicer to lift it out into its own JS module to keep things tidy:
 
 ```js
 // .eleventy.js
@@ -112,9 +117,9 @@ module.exports = {
 };
 ```
 
-You might choose to break translations out into their own individual `en-GB.js` and `es-ES.js` data files, then import and merge them into a single `translations` object for the plugin. As long as our `translation` schema is the same when you're done, we're good to go! (See: [API: `key`](https://github.com/adamduncan/eleventy-plugin-i18n#key))
+You might choose to break translations out into their own individual `en-GB.js` and `es-ES.js` data files, then import and merge them into a single `translations` object for the plugin. As long as our `translation` schema is the same when you're done, we're good to go! (See [API: `key`](#key))
 
-_Note:_ These data files could also be JSON, but I've opted for JS files for more flexibility around quotation marks and comments.
+_Note:_ These data files could also be JSON, but we've opted for JS files to offer more flexibility around quotation marks and comments.
 
 #### `fallbackLocale`
 
@@ -122,7 +127,7 @@ Type: `String` | Default: ‌`en`
 
 If a matching translation for a given dictionary item can't be found, the `i18n` filter will try to find a fallback from this language in its place.
 
-:eyes: `eleventy-plugin-i18n` will warn you in the Node console when the intended or fallback values can't be found for a given language based on your `translations`.
+👀 `eleventy-plugin-i18n` will warn you in the Node console when the intended or fallback values can't be found for a given language based on your `translations`.
 
 ## Usage
 
@@ -146,7 +151,7 @@ Type: `String`
 
 The translation lookup key for our dictionary item.
 
-:hushed: Fun fact: Translation objects can be structured however you like, as long as the `locale` is at the end of the chain. `i18n` uses [lodash's `get`](https://lodash.com/docs/#get) under the hood to make dot notation lookups like this easy peasy:
+😯 Fun fact: Translation objects can be structured however you like, as long as the `locale` is at the end of the chain. `i18n` uses [lodash's `get`](https://lodash.com/docs/#get) under the hood to make dot notation lookups like this easy peasy:
 
 ```js
 module.exports = {
@@ -193,16 +198,18 @@ We can guarantee a translation will always return in a given language by includi
 {{ 'hello' | i18n({}, 'es-ES') }}
 ```
 
-_Note:_ Here we will still have to pass the first `data` argument, even if no interpolation is needed. You can pass an empty object `{}` or `undefined`.
+_Note:_ Here we still have to pass the first `data` argument, even if no interpolation is needed. You can pass an empty object `{}` or `undefined`.
 
 ## Roadmap
 
-- [ ] Write up tutorial to build on some great concepts ([multilingual](https://www.webstoemp.com/blog/multilingual-sites-eleventy/), [language toggle](https://www.webstoemp.com/blog/language-switcher-multilingual-jamstack-sites/)) in this area. Dive further into how to architect and implement multilingual Eleventy sites, and leverage the plugin (e.g. [smart language switching](https://github.com/adamduncan/eleventy-plugin-i18n-demo/blob/master/src/_includes/components/language-selector.njk), using Netlify's `_redirects` to get users to where they need to go).
+- [ ] Write up tutorial to build on some great concepts ([multilingual](https://www.webstoemp.com/blog/multilingual-sites-eleventy/), [language toggle](https://www.webstoemp.com/blog/language-switcher-multilingual-jamstack-sites/)) in this area. Dive deeper into how to architect and implement multilingual Eleventy sites, and leverage the plugin (e.g. [smart language switching](https://github.com/adamduncan/eleventy-plugin-i18n-demo/blob/master/src/_includes/components/language-selector.njk), using Netlify's `_redirects` to get users to where they need to go).
+- [ ] Consider how one might still be able to achieve a simple language switcher if site trees diverge (e.g. if `es-ES` url paths are en Español).
 - [ ] Explore shipping additional i18n-aware `pluralize` filter `{{ 'apple' | i18n | pluralize(3) }}` (Awesome suggestion from [@alexcarpenter](https://github.com/alexcarpenter)).
+- [ ] [Jekyll](https://github.com/kurtsson/jekyll-multiple-languages-plugin#5-usage)/[Hugo](https://gohugo.io/functions/i18n/) sites often have similar libraries with `t` or `T` filters as an alias for `i18n`. Worthwhile for those migrating?
 - [ ] Quiet mode option? Some might want to suppress the console logs on missing translations?
 
 ---
 
 Read more about [Eleventy plugins](https://www.11ty.dev/docs/plugins/).
 
-Feedback welcome :raised_hands:
+Feedback welcome 🙌
