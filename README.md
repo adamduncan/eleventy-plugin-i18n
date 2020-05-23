@@ -186,10 +186,10 @@ module.exports = {
 
 Type: `String`
 
-We can guarantee a translation will always return in a given language by including a `localeOverride` as the second argument. For example, this will always render in French, no matter which country site it's in:
+We can guarantee a translation will always return in a given language by including a `localeOverride` as the second argument. For example, this will always render in Spanish, no matter which country site it's in. Muy bueno!
 
 ```
-{{ 'hello' | i18n({}, 'fr-FR') }}
+{{ 'hello' | i18n({}, 'es-ES') }}
 ```
 
 _Note:_ Here we will still have to pass the first `data` argument, even if no interpolation is needed. You can pass an empty object `{}` or `undefined`.
