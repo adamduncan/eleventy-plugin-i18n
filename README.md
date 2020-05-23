@@ -4,7 +4,7 @@
 
 ## Install
 
-Available on [npm](https://www.npmjs.com/package/eleventy-plugin-i18n).
+Soon to be available on npm. (As soon as they decide the package name isn't a spam grab)
 
 ```
 npm install eleventy-plugin-i18n --save
@@ -166,7 +166,7 @@ module.exports = {
 
 Type: `Object` | Default: `{}`
 
-Translation values can interpolate data using the `{{ }}` syntax (thanks to @lukeed's awesome [`templite`](https://github.com/lukeed/templite/) — check out their docs!). For example, given the translation:
+Translation values can interpolate data using the `{{ }}` syntax (thanks to [@lukeed](https://github.com/lukeed)'s awesome [`templite`](https://github.com/lukeed/templite/) — check out their docs!). For example, given the translation:
 
 ```js
 module.exports = {
