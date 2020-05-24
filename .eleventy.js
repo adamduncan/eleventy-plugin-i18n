@@ -2,7 +2,7 @@ const i18n = require('./i18n.js');
 
 const defaultOptions = {
   translations: {},
-  fallbackLocale: 'en'
+  fallbackLocales: {}
 };
 
 module.exports = function (eleventyConfig, configGlobalOptions = {}) {

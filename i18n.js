@@ -13,39 +13,40 @@ module.exports = function (
 ) {
   const {
     translations = {},
-    fallbackLocale: fallbackLocale = 'en-GB'
+    fallbackLocales: fallbackLocales = {}
   } = pluginOptions;
 
   // Use explicit `locale` argument if passed in, otherwise infer it from URL prefix segment
   const url = get(page, 'url', '');
-  const contextLocale = localeOverride || url.split('/')[1];
+  const contextLocale = url.split('/')[1];
+  const locale = localeOverride || contextLocale;
 
-  const locale = contextLocale || fallbackLocale;
-
-  // Intended translation
+  // Preferred translation
   const translation = get(translations, `[${key}][${locale}]`);
 
   if (translation !== undefined) {
     return templite(translation, data);
-  } else {
-    console.warn(
-      chalk.yellow(
-        `Warning: Could not find i18n translation for '${key}' in '${contextLocale}' locale. Using fallback.`
-      )
-    );
   }
 
   // Fallback translation
+  const fallbackLocale =
+    get(fallbackLocales, locale) || get(fallbackLocales, '*');
   const fallbackTranslation = get(translations, `[${key}][${fallbackLocale}]`);
 
   if (fallbackTranslation !== undefined) {
-    return templite(fallbackTranslation, data);
-  } else {
     console.warn(
-      chalk.red(
-        `Not found: Could not find i18n translation for '${key}' in '${fallbackLocale}' fallback locale.`
+      chalk.yellow(
+        `[i18n] Could not find '${key}' in '${locale}'. Using '${fallbackLocale}' fallback.`
       )
     );
-    return key;
+    return templite(fallbackTranslation, data);
   }
+
+  // Not found
+  console.warn(
+    chalk.red(
+      `[i18n] Translation for '${key}' in '${locale}' not found. No fallback locale specified.`
+    )
+  );
+  return key;
 };

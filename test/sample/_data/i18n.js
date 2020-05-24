@@ -9,6 +9,6 @@ module.exports = {
   },
   test: {
     'en-GB': 'Test',
-    'es-ES': 'Prueba'
+    'fr-FR': 'Tester'
   }
 };

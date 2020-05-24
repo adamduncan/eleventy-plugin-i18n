@@ -67,7 +67,7 @@ In each language site directory, create a locale data file of the same name. Inc
 
 ### 3. Add to Eleventy configuration
 
-Open up your Eleventy config file (probably `.eleventy.js`). Import the plugin and use `addPlugin`. This is where we provide the `translations` and `fallbackLocale` as plugin options:
+Open up your Eleventy config file (probably `.eleventy.js`). Import the plugin and use `addPlugin`. This is where we provide the `translations` and `fallbackLocales` as plugin options:
 
 ```js
 // .eleventy.js
@@ -81,7 +81,9 @@ module.exports = function (eleventyConfig) {
         'es-ES': 'Hola'
       }
     },
-    fallbackLocale: 'en-GB'
+    fallbackLocales: {
+      'es-ES': 'en-GB'
+    }
   });
 };
 ```
@@ -102,7 +104,9 @@ const translations = require('./src/_data/i18n');
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPlugin(i18n, {
     translations,
-    fallbackLocale: 'en-GB'
+    fallbackLocales: {
+      'es-ES': 'en-GB'
+    }
   });
 };
 ```
@@ -121,13 +125,21 @@ You might choose to break translations out into their own individual `en-GB.js` 
 
 _Note:_ These data files could also be JSON, but we've opted for JS files to offer more flexibility around quotation marks and comments.
 
-#### `fallbackLocale`
+#### `fallbackLocales`
 
-Type: `String` | Default: ‌`en`
+Type: `Object` | Default: ‌`{}`
 
-If a matching translation for a given dictionary item can't be found, the `i18n` filter will try to find a fallback from this language in its place.
+If a matching translation for a given dictionary item can't be found, the `i18n` filter will try to find a fallback from the relevant language based on the `fallbackLocales` key/value pairs you specify. In the examples above, we're specifying that should a translation not be available in Spanish, we'll try to fall back to UK English.
 
-👀 `eleventy-plugin-i18n` will warn you in the Node console when the intended or fallback values can't be found for a given language based on your `translations`.
+You can also use a wildcard `*` to specify that all missing translations fall back to a given language:
+
+```js
+fallbackLocales: {
+  '*': 'en-GB'
+}
+```
+
+👀 `eleventy-plugin-i18n` will warn you in the Node console when the intended translation or fallback values can't be found for a given language based on your `translations`.
 
 ## Usage
 
