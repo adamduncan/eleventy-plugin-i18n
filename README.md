@@ -13,7 +13,7 @@ What's in the box? A contextually-aware `i18n` filter, with smarts and dynamic s
 
 ## Install
 
-Soon to be available on npm. (As soon as they decide the package name isn't a spam grab)
+Available on [npm](https://www.npmjs.com/package/eleventy-plugin-i18n).
 
 ```
 npm install eleventy-plugin-i18n --save
@@ -94,7 +94,7 @@ Type: `Object` | Default: `{}`
 
 Schema: `{ [key]: { [locale]: 'String' } }`
 
-This object contains our dictionary of translations for each respective language. It _can_ be declared inline within the plugin options (as above), but it might be nicer to lift it out into its own JS module to keep things tidy:
+This object contains our dictionary of translations for each respective language. It _can_ be declared inline within the plugin options (as above), but it might be nicer to lift it out into its own JS module to keep things tidy as it grows:
 
 ```js
 // .eleventy.js
@@ -123,7 +123,7 @@ module.exports = {
 
 You might choose to break translations out into their own individual `en-GB.js` and `es-ES.js` data files, then import and merge them into a single `translations` object for the plugin. As long as our `translation` schema is the same when you're done, we're good to go! (See [API: `key`](#key))
 
-_Note:_ These data files could also be JSON, but we've opted for JS files to offer more flexibility around quotation marks and comments.
+_Note:_ These [global data files](https://www.11ty.dev/docs/data-global/) could also be JSON, but we've opted for JS to offer more flexibility around quotation marks and comments.
 
 #### `fallbackLocales`
 
@@ -139,7 +139,7 @@ fallbackLocales: {
 }
 ```
 
-👀 `eleventy-plugin-i18n` will warn you in the Node console when the intended translation or fallback values can't be found for a given language based on your `translations`.
+👀 `eleventy-plugin-i18n` will warn you in the Node console when the intended translation or fallback values can't be found for a given language based on your `translations` data.
 
 ## Usage
 
