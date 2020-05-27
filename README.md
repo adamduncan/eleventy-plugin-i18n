@@ -1,6 +1,6 @@
 # eleventy-plugin-i18n
 
-⚠️ _Coming soon:_ [Eleventy](https://www.11ty.dev/) plugin to assist with internationalization and dictionary translations.
+[Eleventy](https://www.11ty.dev/) plugin to assist with internationalization and dictionary translations.
 
 What's in the box? A contextually-aware `i18n` filter, with smarts and dynamic string interpolation.
 
@@ -215,10 +215,11 @@ _Note:_ Here we still have to pass the first `data` argument, even if no interpo
 ## Roadmap
 
 - [ ] Write up tutorial to build on some great concepts ([multilingual](https://www.webstoemp.com/blog/multilingual-sites-eleventy/), [language toggle](https://www.webstoemp.com/blog/language-switcher-multilingual-jamstack-sites/)) in this area. Dive deeper into how to architect and implement multilingual Eleventy sites, and leverage the plugin (e.g. [smart language switching](https://github.com/adamduncan/eleventy-plugin-i18n-demo/blob/master/src/_includes/components/language-selector.njk), using Netlify's `_redirects` to get users to where they need to go).
-- [ ] Consider how one might still be able to achieve a simple language switcher if site trees diverge (e.g. if `es-ES` url paths are en Español).
-- [ ] Explore shipping additional i18n-aware `pluralize` filter `{{ 'apple' | i18n | pluralize(3) }}` (Awesome suggestion from [@alexcarpenter](https://github.com/alexcarpenter)).
 - [ ] [Jekyll](https://github.com/kurtsson/jekyll-multiple-languages-plugin#5-usage)/[Hugo](https://gohugo.io/functions/i18n/) sites often have similar libraries with `t` or `T` filters as an alias for `i18n`. Worthwhile for those migrating?
 - [ ] Quiet mode option? Some might want to suppress the console logs on missing translations?
+- [ ] Explore shipping additional i18n-aware `pluralize` filter `{{ 'apple' | i18n | pluralize(3) }}` (Awesome suggestion from [@alexcarpenter](https://github.com/alexcarpenter)).
+- [ ] Move to v1.0.0 once we've gathered some feedback on the API.
+- [ ] Consider how one might still be able to achieve a simple language switcher if site trees diverge (e.g. if `es-ES` url paths are en Español).
 
 ---
 
