@@ -141,6 +141,22 @@ fallbackLocales: {
 
 👀 `eleventy-plugin-i18n` will warn you in the Node console when the intended translation or fallback values can't be found for a given language based on your `translations` data.
 
+#### `notFoundCallback`
+
+Type: `Function` | Default: ‌``
+
+If a matching translation can not be found at all, you may specify a
+callback function that deals with the situation. It is invoked with
+(key, locale) and may return a
+string to be used as a translation. This callback function may be
+useful to detect and record untranslated strings.
+
+```js
+notFoundCallBack: (key, locale) => {saveToFile(key,locale); 'Needs translation:'+key}
+```
+
+👀 `eleventy-plugin-i18n` will warn you in the Node console when the intended translation or fallback values can't be found for a given language based on your `translations` data.
+
 ## Usage
 
 Once configured, the `i18n` [Universal filter](https://www.11ty.dev/docs/filters/#universal-filters) is available throughout Nunjucks, Handlebars, Liquid, and JavaScript templates and includes. E.g. To return the translation for our `hello` key in Nunjucks or Liquid syntax:

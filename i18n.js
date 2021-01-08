@@ -13,7 +13,8 @@ module.exports = function (
 ) {
   const {
     translations = {},
-    fallbackLocales: fallbackLocales = {}
+    fallbackLocales: fallbackLocales = {},
+    notFoundCallback
   } = pluginOptions;
 
   // Use explicit `locale` argument if passed in, otherwise infer it from URL prefix segment
@@ -43,10 +44,14 @@ module.exports = function (
   }
 
   // Not found
-  console.warn(
-    chalk.red(
-      `[i18n] Translation for '${key}' in '${locale}' not found. No fallback locale specified.`
-    )
-  );
+  if (notFoundCallback) {
+    key = notFoundCallback(key, locale) || key;
+  } else {
+    console.warn(
+      chalk.red(
+        `[i18n] Translation for '${key}' in '${locale}' not found. No fallback locale specified.`
+      )
+    );
+  }
   return key;
 };
