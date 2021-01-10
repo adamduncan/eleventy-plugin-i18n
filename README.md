@@ -181,7 +181,7 @@ lookupFn : (key, locale, translations) => {
         return values[locale];
     }
 }
-
+```
 
 ## Usage
 
