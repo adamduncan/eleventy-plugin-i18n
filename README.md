@@ -152,7 +152,10 @@ string to be used as a translation. This callback function may be
 useful to detect and record untranslated strings.
 
 ```js
-notFoundCallBack: (key, locale) => {saveToFile(key,locale); 'Needs translation:'+key}
+notFoundCallBack: (key, locale) => {
+  saveToNeedsTranslationFile(key, locale);
+  return('Needs translation:' + key);
+}
 ```
 
 ## Usage
