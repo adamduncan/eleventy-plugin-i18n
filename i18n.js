@@ -14,6 +14,7 @@ module.exports = function (
   const {
     translations = {},
     fallbackLocales: fallbackLocales = {},
+    lookupFn : lookupFn = (key, locale, translations) => get(translations, `[${key}][${locale}]`),
     notFoundCallback
   } = pluginOptions;
 
@@ -23,7 +24,7 @@ module.exports = function (
   const locale = localeOverride || contextLocale;
 
   // Preferred translation
-  const translation = get(translations, `[${key}][${locale}]`);
+  const translation = lookupFn(key, locale, translations);
 
   if (translation !== undefined) {
     return templite(translation, data);
@@ -32,7 +33,7 @@ module.exports = function (
   // Fallback translation
   const fallbackLocale =
     get(fallbackLocales, locale) || get(fallbackLocales, '*');
-  const fallbackTranslation = get(translations, `[${key}][${fallbackLocale}]`);
+  const fallbackTranslation = lookupFn(key, fallbackLocale, translations);
 
   if (fallbackTranslation !== undefined) {
     console.warn(

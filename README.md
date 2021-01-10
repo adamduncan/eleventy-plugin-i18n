@@ -158,6 +158,31 @@ notFoundCallBack: (key, locale) => {
 }
 ```
 
+#### `lookupFn`
+
+Type: `Function` | Default: ‌lodash.get `(key, locale, translations) => get(translations, `[${key}][${locale}]`)`
+
+Allows changing the behaviour from the default, which is to use a
+translation objects where `locale` is at the end of the chain, and
+ [lodash's `get`](https://lodash.com/docs/#get) for dot notation
+ lookups.
+ 
+The lookupFn is invoked with (key, locale, translations) and returns a
+matching translated string. This callback function may be useful to take
+notice of what translations are actually in use, or it may be useful
+to specify a simpler lookup behaviour:
+
+```js
+lookupFn : (key, locale, translations) => {
+    // Allow to use dots as keys in
+    // simple key/value translation object
+    const values = translations[key];
+    if (values) {
+        return values[locale];
+    }
+}
+
+
 ## Usage
 
 Once configured, the `i18n` [Universal filter](https://www.11ty.dev/docs/filters/#universal-filters) is available throughout Nunjucks, Handlebars, Liquid, and JavaScript templates and includes. E.g. To return the translation for our `hello` key in Nunjucks or Liquid syntax:
