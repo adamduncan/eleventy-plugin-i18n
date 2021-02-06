@@ -147,7 +147,7 @@ Type: `Function` | Default: ‌``
 
 If a matching translation can not be found at all, you may specify a
 callback function that deals with the situation. It is invoked with
-(key, locale) and may return a
+(key, locale, data) and may return a
 string to be used as a translation. This callback function may be
 useful to detect and record untranslated strings.
 
@@ -167,7 +167,7 @@ translation objects where `locale` is at the end of the chain, and
  [lodash's `get`](https://lodash.com/docs/#get) for dot notation
  lookups.
  
-The lookupFn is invoked with (key, locale, translations) and returns a
+The lookupFn is invoked with (key, locale, translations, data) and returns a
 matching translated string. This callback function may be useful to take
 notice of what translations are actually in use, or it may be useful
 to specify a simpler lookup behaviour:
@@ -182,6 +182,12 @@ lookupFn : (key, locale, translations) => {
     }
 }
 ```
+#### `useTemplite`
+
+Type: `Boolean` | Default: ‌`true`
+
+Defines if templite feature is enabled (see data below). If not, data
+can be used as an extra parameter passed onto the lookupFn.
 
 ## Usage
 

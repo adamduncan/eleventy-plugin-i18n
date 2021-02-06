@@ -15,7 +15,9 @@ module.exports = function (
     translations = {},
     fallbackLocales: fallbackLocales = {},
     lookupFn : lookupFn = (key, locale, translations) => get(translations, `[${key}][${locale}]`),
-    notFoundCallback
+    useTemplite = true,
+    notFoundCallback,
+    silent = false
   } = pluginOptions;
 
   // Use explicit `locale` argument if passed in, otherwise infer it from URL prefix segment
@@ -24,24 +26,32 @@ module.exports = function (
   const locale = localeOverride || contextLocale;
 
   // Preferred translation
-  const translation = lookupFn(key, locale, translations);
+  const translation = lookupFn(key, locale, translations, data);
 
   if (translation !== undefined) {
-    return templite(translation, data);
+      if (useTemplite) {
+          return templite(translation, data);
+      }
+      return translation;
   }
 
   // Fallback translation
   const fallbackLocale =
     get(fallbackLocales, locale) || get(fallbackLocales, '*');
-  const fallbackTranslation = lookupFn(key, fallbackLocale, translations);
+  const fallbackTranslation = lookupFn(key, fallbackLocale, translations, data);
 
   if (fallbackTranslation !== undefined) {
-    console.warn(
-      chalk.yellow(
-        `[i18n] Could not find '${key}' in '${locale}'. Using '${fallbackLocale}' fallback.`
-      )
-    );
-    return templite(fallbackTranslation, data);
+    if (!silent) {
+      console.warn(
+        chalk.yellow(
+          `[i18n] Could not find '${key}' in '${locale}'. Using '${fallbackLocale}' fallback.`
+        )
+      );
+    }
+    if (useTemplite) {
+        return templite(fallbackTranslation, data);          
+    }
+    return fallbackTranslation;
   }
 
   // Not found
