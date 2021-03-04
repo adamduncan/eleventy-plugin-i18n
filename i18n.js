@@ -16,8 +16,8 @@ module.exports = function (
     fallbackLocales: fallbackLocales = {}
   } = pluginOptions;
 
-  // Use explicit `locale` argument if passed in, otherwise infer it from URL prefix segment
-  const url = get(page, 'url', '');
+  // Use explicit `locale` argument if passed in, otherwise infer it from directory prefix segment
+  const url = get(page, 'filePathStem', '');
   const contextLocale = url.split('/')[1];
   const locale = localeOverride || contextLocale;
 
