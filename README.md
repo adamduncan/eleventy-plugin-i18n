@@ -141,6 +141,12 @@ fallbackLocales: {
 
 👀 `eleventy-plugin-i18n` will warn you in the Node console when the intended translation or fallback values can't be found for a given language based on your `translations` data.
 
+#### `contextLocale`
+
+Type: `function` | Default: ‌`(page, config) => get(page, 'url', '').split('/')[1]`
+
+You might provide a function in order to compute the context locale (that is, the locale applied to the `i18n` filter when no arguments are provided). By default, this would be the first segment of the URL (`/en/`, `/it/` and so on). If you use a custom directory strategy, like not prefixing the current locale, this option comes to help. The first argument of the function is the `page` object (could be `undefined`), the second is the plugin `config` object.
+
 ## Usage
 
 Once configured, the `i18n` [Universal filter](https://www.11ty.dev/docs/filters/#universal-filters) is available throughout Nunjucks, Handlebars, Liquid, and JavaScript templates and includes. E.g. To return the translation for our `hello` key in Nunjucks or Liquid syntax:
