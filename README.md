@@ -141,6 +141,54 @@ fallbackLocales: {
 
 👀 `eleventy-plugin-i18n` will warn you in the Node console when the intended translation or fallback values can't be found for a given language based on your `translations` data.
 
+#### `notFoundCallback`
+
+Type: `Function` | Default: ‌``
+
+If a matching translation can not be found at all, you may specify a
+callback function that deals with the situation. It is invoked with
+(key, locale, data) and may return a
+string to be used as a translation. This callback function may be
+useful to detect and record untranslated strings.
+
+```js
+notFoundCallBack: (key, locale) => {
+  saveToNeedsTranslationFile(key, locale);
+  return('Needs translation:' + key);
+}
+```
+
+#### `lookupFn`
+
+Type: `Function` | Default: ‌lodash.get `(key, locale, translations) => get(translations, `[${key}][${locale}]`)`
+
+Allows changing the behaviour from the default, which is to use a
+translation objects where `locale` is at the end of the chain, and
+ [lodash's `get`](https://lodash.com/docs/#get) for dot notation
+ lookups.
+ 
+The lookupFn is invoked with (key, locale, translations, data) and returns a
+matching translated string. This callback function may be useful to take
+notice of what translations are actually in use, or it may be useful
+to specify a simpler lookup behaviour:
+
+```js
+lookupFn : (key, locale, translations) => {
+    // Allow to use dots as keys in
+    // simple key/value translation object
+    const values = translations[key];
+    if (values) {
+        return values[locale];
+    }
+}
+```
+#### `useTemplite`
+
+Type: `Boolean` | Default: ‌`true`
+
+Defines if templite feature is enabled (see data below). If not, data
+can be used as an extra parameter passed onto the lookupFn.
+
 ## Usage
 
 Once configured, the `i18n` [Universal filter](https://www.11ty.dev/docs/filters/#universal-filters) is available throughout Nunjucks, Handlebars, Liquid, and JavaScript templates and includes. E.g. To return the translation for our `hello` key in Nunjucks or Liquid syntax:
