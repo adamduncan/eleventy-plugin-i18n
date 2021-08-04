@@ -26,7 +26,7 @@
     "@11ty/eleventy": ">=0.11.0 <1.0.0"
   },
   "dependencies": {
-    "chalk": "^4.0.0",
+    "chalk": "^4.1.1",
     "lodash.get": "^4.4.2",
     "templite": "^1.1.0"
   },
