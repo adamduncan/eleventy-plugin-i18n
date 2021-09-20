@@ -13,7 +13,8 @@ module.exports = function (
 ) {
   const {
     translations = {},
-    fallbackLocales: fallbackLocales = {}
+    fallbackLocales: fallbackLocales = {},
+    quiteMode = false
   } = pluginOptions;
 
   // Use explicit `locale` argument if passed in, otherwise infer it from URL prefix segment
@@ -34,19 +35,24 @@ module.exports = function (
   const fallbackTranslation = get(translations, `[${key}][${fallbackLocale}]`);
 
   if (fallbackTranslation !== undefined) {
-    console.warn(
-      chalk.yellow(
-        `[i18n] Could not find '${key}' in '${locale}'. Using '${fallbackLocale}' fallback.`
-      )
-    );
+    if (!quiteMode) {
+      console.warn(
+        chalk.yellow(
+          `[i18n] Could not find '${key}' in '${locale}'. Using '${fallbackLocale}' fallback.`
+        )
+      );
+    }
     return templite(fallbackTranslation, data);
   }
 
+  
   // Not found
-  console.warn(
-    chalk.red(
-      `[i18n] Translation for '${key}' in '${locale}' not found. No fallback locale specified.`
-    )
-  );
+  if (!quiteMode) {
+    console.warn(
+      chalk.red(
+        `[i18n] Translation for '${key}' in '${locale}' not found. No fallback locale specified.`
+      )
+    );
+  }
   return key;
 };
