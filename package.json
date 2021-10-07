@@ -22,8 +22,8 @@
     "url": "https://github.com/adamduncan/eleventy-plugin-i18n/issues"
   },
   "homepage": "https://github.com/adamduncan/eleventy-plugin-i18n#readme",
-  "peerDependencies": {
-    "@11ty/eleventy": "^1.0.0-beta.1"
+  "11ty": {
+    "compatibility": ">=0.11"
   },
   "dependencies": {
     "chalk": "^4.1.1",
