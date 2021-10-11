@@ -1,3 +1,4 @@
+const pkg = require('./package.json');
 const i18n = require('./i18n.js');
 
 const defaultOptions = {
@@ -6,6 +7,13 @@ const defaultOptions = {
 };
 
 module.exports = function (eleventyConfig, configGlobalOptions = {}) {
+  try {
+    eleventyConfig.versionCheck(pkg['11ty'].compatibility);
+  } catch (e) {
+    console.log(
+      `WARN: Eleventy Plugin (${pkg.name}) Compatibility: ${e.message}`
+    );
+  }
   const pluginOptions = Object.assign({}, defaultOptions, configGlobalOptions);
 
   eleventyConfig.addFilter('i18n', function (key, data, localeOverride) {
