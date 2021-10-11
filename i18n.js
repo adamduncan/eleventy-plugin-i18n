@@ -11,10 +11,8 @@ module.exports = function (
   pluginOptions = {},
   page
 ) {
-  const {
-    translations = {},
-    fallbackLocales: fallbackLocales = {}
-  } = pluginOptions;
+  const { translations = {}, fallbackLocales: fallbackLocales = {} } =
+    pluginOptions;
 
   // Use explicit `locale` argument if passed in, otherwise infer it from URL prefix segment
   const url = get(page, 'url', '');
