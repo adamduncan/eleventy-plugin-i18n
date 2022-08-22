@@ -2,14 +2,37 @@
 
 const chalk = require('chalk');
 const get = require('lodash.get');
+const deepmerge = require('deepmerge');
 const templite = require('templite');
+const trueType = (val) => Object.prototype.toString.call(val).slice(8, -1).toLowerCase();
+
+function createLangDictionary(lang, object, translations = {}) {
+	if (!object) {
+		return translations;
+	}
+	for (const [key, value] of Object.entries(object)) {
+		// Create the property if it does not exist
+		if (typeof translations[key] === 'undefined') {
+			translations[key] = {};
+		}
+		// If it's an object, recursively assign
+		if (trueType(value) === 'object') {
+			translations[key] = deepmerge(createLangDictionary(lang, value, translations[key]), translations[key]);
+		} else {
+			// End of the line: set the translation value
+			translations[key][lang] = value;
+		}
+	}
+	return translations;
+}
 
 module.exports = function (
   key,
   data = {},
   localeOverride,
   pluginOptions = {},
-  page
+  page,
+  pageDictionary = {}
 ) {
   const { translations = {}, fallbackLocales: fallbackLocales = {} } =
     pluginOptions;
@@ -19,8 +42,11 @@ module.exports = function (
   const contextLocale = url.split('/')[1];
   const locale = localeOverride || contextLocale;
 
+  // Add additional dictionary entries if the page context provides any
+  const translationsExtended = createLangDictionary(locale, pageDictionary, structuredClone(translations))
+
   // Preferred translation
-  const translation = get(translations, `[${key}][${locale}]`);
+  const translation = get(translationsExtended, `[${key}][${locale}]`);
 
   if (translation !== undefined) {
     return templite(translation, data);
@@ -29,7 +55,7 @@ module.exports = function (
   // Fallback translation
   const fallbackLocale =
     get(fallbackLocales, locale) || get(fallbackLocales, '*');
-  const fallbackTranslation = get(translations, `[${key}][${fallbackLocale}]`);
+  const fallbackTranslation = get(translationsExtended, `[${key}][${fallbackLocale}]`);
 
   if (fallbackTranslation !== undefined) {
     console.warn(
