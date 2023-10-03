@@ -14,10 +14,8 @@ module.exports = function (
   const { translations = {}, fallbackLocales: fallbackLocales = {} } =
     pluginOptions;
 
-  // Use explicit `locale` argument if passed in, otherwise infer it from URL prefix segment
-  const url = get(page, 'url', '');
-  const contextLocale = url.split('/')[1];
-  const locale = localeOverride || contextLocale;
+  // Use explicit `locale` argument if passed in, otherwise use the `lang` `page` variable attribute available in 2.0
+  const locale = localeOverride || get(page, 'lang', '');
 
   // Preferred translation
   const translation = get(translations, `[${key}][${locale}]`);
